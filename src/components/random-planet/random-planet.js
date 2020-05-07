@@ -12,24 +12,29 @@ class RandomPlanet extends Component {
     error: null,
   };
 
-  onError = (error) => {
+  componentDidMount() {
+    this.updatePlanet();
+    this.interval = setInterval(this.updatePlanet, 2500);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  onError = () => {
     this.setState({ error: true, loading: false });
   };
 
   updatePlanet = async () => {
     try {
-      const id = Math.floor(Math.random() * 25) + 2;
+      const id = Math.floor(Math.random() * 18) + 1;
       const planet = await swapiService.getPlanet(id);
 
-      this.setState({ planet, loading: false, onError: false });
+      this.setState({ planet, loading: false, error: false });
     } catch (error) {
-      this.onError(error);
+      this.onError();
     }
   };
-
-  componentDidMount() {
-    this.updatePlanet();
-  }
 
   render() {
     const { planet, loading, error } = this.state;
