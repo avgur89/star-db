@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import swapiService from '../../services/swap-service.js';
 import Spinner from '../spinner';
 import ErrorMessage from '../error-indicator';
+import ErrorButton from '../error-button';
 
 import './person-details.css';
 
@@ -80,6 +81,7 @@ class PersonDetails extends Component {
                   <span>{eyeColor}</span>
                 </li>
               </ul>
+              <ErrorButton />
             </div>
           </div>
         ) : null}
