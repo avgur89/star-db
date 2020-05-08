@@ -3,7 +3,7 @@ import swapiService from '../../services/swap-service';
 import Row from '../row';
 import ErrorBoundry from '../error-boundry';
 import ItemList from '../item-list';
-import ItemDetails from '../item-details';
+import ItemDetails, { Record } from '../item-details';
 
 import './people-page.css';
 
@@ -30,7 +30,10 @@ class PeoplePage extends Component {
         itemId={this.state.selectedPerson}
         getData={getPerson}
         getImageUrl={getPersonImage}
-      />
+      >
+        <Record field="gender" label="Gender" />
+        <Record field="eyeColor" label="Eye Color" />
+      </ItemDetails>
     );
 
     return (
