@@ -1,62 +1,52 @@
-import React, { Component, Fragment } from 'react';
-import swapiService from '../../services/swap-service';
+import React, { Component } from 'react';
 import Spinner from '../spinner';
-import ErrorIndicator from '../error-indicator';
 
 import './item-list.css';
 
-export default class ItemList extends Component {
+class ItemList extends Component {
   state = {
-    peopleList: null,
-    loading: true,
-    error: null,
-  };
-
-  getPeople = async () => {
-    try {
-      const people = await swapiService.getAllPeople();
-
-      this.setState({ peopleList: people, loading: false, error: false });
-    } catch (error) {
-      this.setState({ error: true, loading: false });
-    }
+    itemList: null,
   };
 
   componentDidMount() {
-    this.getPeople();
+    this.getItemList();
   }
 
-  renderItems = (people) => {
-    return (
-      <ul className="item-list list-group">
-        {people.map(({ id, name }) => {
-          return (
-            <li
-              className="list-group-item"
-              key={id}
-              onClick={() => this.props.onItemSelected(id)}
-            >
-              {name}
-            </li>
-          );
-        })}
-      </ul>
-    );
+  getItemList = async () => {
+    const { getData } = this.props;
+    const itemList = await getData();
+
+    this.setState({ itemList });
+  };
+
+  renderItems = (arr) => {
+    return arr.map((item) => {
+      const { id } = item;
+      const label = this.props.children(item);
+
+      return (
+        <li
+          className="list-group-item"
+          key={id}
+          onClick={() => this.props.onItemSelected(id)}
+        >
+          {label}
+        </li>
+      );
+    });
   };
 
   render() {
-    const { peopleList, loading, error } = this.state;
-    const hasData = !(loading || error);
-    const spinner = loading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorIndicator /> : null;
-    const content = hasData ? this.renderItems(peopleList) : null;
+    const { itemList } = this.state;
 
-    return (
-      <Fragment>
-        {spinner}
-        {errorMessage}
-        {content}
-      </Fragment>
-    );
+    if (!itemList) {
+      return <Spinner />;
+    }
+
+    const items = this.renderItems(itemList);
+
+    return <ul className="item-list list-group">{items}</ul>;
   }
 }
+
+export default ItemList;
