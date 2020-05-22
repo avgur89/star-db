@@ -17,10 +17,10 @@ class PeoplePage extends Component {
   };
 
   render() {
-    const { getAllPeople, getPerson, getPersonImage } = swapiService;
+    const { getPerson, getPersonImage } = swapiService;
 
     const itemList = (
-      <ItemList onItemSelected={this.onPersonSelected} getData={getAllPeople}>
+      <ItemList onItemSelected={this.onPersonSelected}>
         {(i) => `${i.name} (${i.birthYear})`}
       </ItemList>
     );
