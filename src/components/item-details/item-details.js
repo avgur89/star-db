@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-import ErrorButton from '../error-button/error-button';
 import Spinner from '../spinner';
 
 import './item-details.css';
@@ -72,7 +70,6 @@ export default class ItemDetails extends Component {
               return React.cloneElement(child, { item });
             })}
           </ul>
-          <ErrorButton />
         </div>
       </div>
     );
