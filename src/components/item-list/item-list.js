@@ -25,6 +25,10 @@ const ItemList = (props) => {
   return <ul className="item-list list-group">{items}</ul>;
 };
 
+ItemList.defaultProps = {
+  onItemSelected: () => {},
+};
+
 const { getAllPeople } = swapiService;
 
 export default withData(ItemList, getAllPeople);
