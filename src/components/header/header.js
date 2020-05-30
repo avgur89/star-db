@@ -1,23 +1,34 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './header.css';
 
-const Header = () => {
+const Header = ({ isLoggedIn }) => {
   return (
     <div className="header d-flex">
       <h3>
-        <span>StarDB</span>
+        <Link to="/">StarDB</Link>
       </h3>
       <ul className="d-flex">
         <li>
-          <span>People</span>
+          <Link to="/people/">People</Link>
         </li>
         <li>
-          <span>Planets</span>
+          <Link to="/planets/">Planets</Link>
         </li>
         <li>
-          <span>Starships</span>
+          <Link to="/starships/">Starships</Link>
         </li>
+        {!isLoggedIn && (
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        )}
+        {isLoggedIn && (
+          <li>
+            <Link to="/secret">Secret</Link>
+          </li>
+        )}
       </ul>
     </div>
   );
